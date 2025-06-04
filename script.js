@@ -77,6 +77,11 @@ function resetPatterns() {
 
         // Disable the Next button
         document.getElementById('next').disabled = true;
+
+        // Reset input fields
+        document.getElementById('matchNumber').value = '';
+        document.getElementById('team1').value = '';
+        document.getElementById('team2').value = '';
     }
 }
 
