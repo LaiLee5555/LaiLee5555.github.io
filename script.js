@@ -14,7 +14,7 @@ function getRandomColor() {
 
 function randomize4x8() {
     if (!isReset) {
-        alert('You must reset before generating a new pattern.');
+        showAlert('You must reset before generating a new pattern.');
         return;
     }
 
@@ -32,7 +32,7 @@ function randomize4x8() {
 
 function randomize4x4() {
     if (!is4x8Randomized) {
-        alert('You must randomize the 4x8 pattern first.');
+        showAlert('You must randomize the 4x8 pattern first.');
         return;
     }
 
@@ -55,7 +55,7 @@ function start() {
 
     // Validate inputs
     if (!matchNumber || !team1 || !team2) {
-        alert('Please fill in all the inputs before starting.');
+        showAlert('Please fill in ** Match Detail ** before starting.');
         return;
     }
 
@@ -73,10 +73,18 @@ function startTimer(duration) {
     const timerElement = document.getElementById('timer');
     let timeRemaining = duration;
 
+    // Update the timer immediately
+    const minutes = Math.floor(timeRemaining / 60);
+    const seconds = timeRemaining % 60;
+    timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
     // Disable the Next button at the start of the timer
     document.getElementById('next').disabled = true;
 
+    // Start the interval
     timerInterval = setInterval(() => {
+        timeRemaining--;
+
         const minutes = Math.floor(timeRemaining / 60);
         const seconds = timeRemaining % 60;
 
@@ -92,53 +100,85 @@ function startTimer(duration) {
             // Enable the Next button after the timer ends
             document.getElementById('next').disabled = false;
         }
-
-        timeRemaining--;
     }, 1000);
 }
 
-function checkIfNextCanBeEnabled() {
-    // Ensure the Next button is disabled until explicitly enabled by the timer
-    document.getElementById('next').disabled = true;
+let confirmCallback = null;
+
+// Function to show the custom confirmation modal
+function showConfirm(message, callback) {
+    const confirmModal = document.getElementById('customConfirm');
+    const confirmMessage = document.getElementById('confirmMessage');
+    confirmMessage.textContent = message; // Set the custom message
+    confirmModal.style.display = 'block'; // Show the modal
+    confirmCallback = callback; // Store the callback function
 }
 
-function resetPatterns() {
-    if (confirm('Are you sure you want to reset the patterns?')) {
-        const boxes = document.querySelectorAll('.box');
-        boxes.forEach(box => {
-            box.style.backgroundColor = '#ccc'; // Reset to default color
-        });
-
-        // Reset color limits
-        Object.keys(colorLimits).forEach(color => {
-            colorLimits[color] = 50;
-        });
-
-        // Reset flags
-        isReset = true;
-        is4x8Randomized = false;
-        is4x4Randomized = false;
-
-        // Disable the Next button
-        document.getElementById('next').disabled = true;
-
-        // Reset input fields
-        document.getElementById('matchNumber').value = '';
-        document.getElementById('team1').value = '';
-        document.getElementById('team2').value = '';
-
-        // Reset timer
-        clearInterval(timerInterval);
-        document.getElementById('timer').textContent = '05:00';
-
-        // Enable the Start button
-        document.getElementById('start').disabled = false;
+// Function to handle the confirmation response
+function handleConfirm(response) {
+    const confirmModal = document.getElementById('customConfirm');
+    confirmModal.style.display = 'none'; // Hide the modal
+    if (confirmCallback) {
+        confirmCallback(response); // Call the callback with the user's response
     }
+}
+
+// Updated resetPatterns function to use the custom confirmation modal
+function resetPatterns() {
+    showConfirm('Are you sure you want to reset the patterns?', function (response) {
+        if (response) {
+            const boxes = document.querySelectorAll('.box');
+            boxes.forEach(box => {
+                box.style.backgroundColor = '#ffffff'; // Reset to white color
+            });
+
+            // Reset color limits
+            Object.keys(colorLimits).forEach(color => {
+                colorLimits[color] = 50;
+            });
+
+            // Reset flags
+            isReset = true;
+            is4x8Randomized = false;
+            is4x4Randomized = false;
+
+            // Disable the Next button
+            document.getElementById('next').disabled = true;
+
+            // Reset input fields
+            document.getElementById('matchNumber').value = '';
+            document.getElementById('team1').value = '';
+            document.getElementById('team2').value = '';
+
+            // Reset timer
+            clearInterval(timerInterval);
+            document.getElementById('timer').textContent = '05:00';
+
+            // Enable the Start button
+            document.getElementById('start').disabled = false;
+
+            // Show a confirmation message
+            showAlert('The patterns and inputs have been reset successfully.');
+        }
+    });
+}
+
+function showAlert(message) {
+    const alertModal = document.getElementById('customAlert');
+    const alertMessage = document.getElementById('alertMessage');
+    alertMessage.textContent = message; // Set the custom message
+    alertModal.style.display = 'block'; // Show the modal
+}
+
+// Function to close the custom alert
+function closeAlert() {
+    const alertModal = document.getElementById('customAlert');
+    alertModal.style.display = 'none'; // Hide the modal
 }
 
 function saveAndReset() {
     if (!is4x8Randomized || !is4x4Randomized) {
-        alert('You must complete both randomizations before saving.');
+        showAlert('You must complete both randomizations before saving.');
         return;
     }
 
@@ -149,15 +189,15 @@ function saveAndReset() {
 
     // Validate inputs
     if (!matchNumber) {
-        alert('Please enter a match number.');
+        showAlert('Please enter a match number.');
         return;
     }
     if (!team1) {
-        alert('Please enter Team 1 name.');
+        showAlert('Please enter Team 1 name.');
         return;
     }
     if (!team2) {
-        alert('Please enter Team 2 name.');
+        showAlert('Please enter Team 2 name.');
         return;
     }
 
@@ -176,7 +216,7 @@ function saveAndReset() {
         link.click(); // Trigger the download
     }).catch(error => {
         console.error('Error saving the pattern:', error);
-        alert('An error occurred while saving the pattern.');
+        showAlert('An error occurred while saving the pattern.');
     });
 }
 

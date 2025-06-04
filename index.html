@@ -92,5 +92,20 @@
         <button id="reset" onclick="resetPatterns()">Reset</button>
         <button id="next" onclick="saveAndReset()">Save</button>
     </div>
+    <div id="customAlert" class="modal">
+        <div class="modal-content">
+            <p id="alertMessage">This is a custom alert message.</p>
+            <button onclick="closeAlert()">OK</button>
+        </div>
+    </div>
+    <div id="customConfirm" class="modal">
+        <div class="modal-content">
+            <p id="confirmMessage">Are you sure you want to proceed?</p>
+            <div class="modal-buttons">
+                <button id="confirmYes" onclick="handleConfirm(true)">Yes</button>
+                <button id="confirmNo" onclick="handleConfirm(false)">No</button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
