@@ -95,6 +95,8 @@ button {
 button:hover {
     background: #4a90e2; /* Slightly darker blue on hover */
     border-color: #4a90e2;
+    box-shadow: 0 0 10px rgba(74, 144, 226, 0.5); /* Subtle blue glow */
+    transform: scale(1.05); 
 }
 
 button:disabled {
