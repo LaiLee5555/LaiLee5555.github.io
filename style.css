@@ -1,0 +1,114 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 20px;
+    background: linear-gradient(135deg, #1e1e2f, #2a2a3d);
+    color: #e0e0e0;
+    font-family: 'Roboto Mono', monospace; /* Robotic font */
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: #00d4ff;
+    text-shadow: 0 0 10px #00d4ff, 0 0 20px #00d4ff;
+    margin-bottom: 20px;
+}
+
+label {
+    font-size: 1rem;
+    color: #00d4ff;
+    text-shadow: 0 0 5px #00d4ff;
+}
+
+input {
+    background-color: #2a2a3d;
+    border: 2px solid #00d4ff;
+    color: #e0e0e0;
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+input:focus {
+    border-color: #ff007f;
+    box-shadow: 0 0 10px #ff007f;
+}
+
+.grid {
+    display: grid;
+    gap: 5px;
+    margin-bottom: 20px;
+    padding: 10px;
+    background: #1e1e2f;
+    border: 2px solid #00d4ff;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+.grid-4x4 {
+    grid-template-columns: repeat(4, 50px);
+    grid-template-rows: repeat(4, 50px);
+}
+
+.grid-4x8 {
+    grid-template-columns: repeat(8, 50px);
+    grid-template-rows: repeat(4, 50px);
+}
+
+.box {
+    width: 50px;
+    height: 50px;
+    background-color: #2a2a3d;
+    border: 2px solid #00d4ff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
+}
+
+.box:hover {
+    background-color: #00d4ff;
+    border-color: #ff007f;
+    box-shadow: 0 0 15px #ff007f;
+}
+
+button {
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-family: 'Roboto Mono', monospace;
+    color: #e0e0e0;
+    background: linear-gradient(135deg, #00d4ff, #2a2a3d);
+    border: 2px solid #00d4ff;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 5px #00d4ff;
+}
+
+button:hover {
+    background: linear-gradient(135deg, #ff007f, #2a2a3d);
+    border-color: #ff007f;
+    box-shadow: 0 0 15px #ff007f;
+}
+
+button:disabled {
+    background: #2a2a3d;
+    color: #555;
+    border-color: #555;
+    cursor: not-allowed;
+}
+
+.match-input, .team-input {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.match-input input, .team-input input {
+    width: 200px;
+}

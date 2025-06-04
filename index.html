@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMC Color Random</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <h1>Welcome to CMC Color Pattern Random</h1>
+    <div class="match-input">
+        <label for="matchNumber">Match Number</label>
+        <input type="number" id="matchNumber" placeholder="Enter Match Number" min="1">
+    </div>
+    <div class="team-input">
+        <label for="team1">Team</label>
+        <input type="text" id="team1" placeholder="Enter Team 1">
+        <label for="vs">VS</label>
+        <label for="team2">Team</label>
+        <input type="text" id="team2" placeholder="Enter Team 2">
+    </div>
+    <div>
+        <h2>4 x 8 Pattern</h2>
+        <div class="grid grid-4x8">
+            <!-- 32 boxes -->
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+        </div>
+        <button id="random4x8" onclick="randomize4x8()">Random 4 x 8</button>
+    </div>
+
+    <div>
+        <h2>4 x 4 Pattern</h2>
+        <div class="grid grid-4x4">
+            <!-- 16 boxes -->
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+        </div>
+        <button id="random4x4" onclick="randomize4x4()" disabled>Random 4 x 4</button>
+    </div>
+
+    
+    <div>
+        <button id="reset" onclick="resetPatterns()">Reset</button>
+        <button id="next" onclick="saveAndReset()">Next</button>
+    </div>
+</body>
+</html>
