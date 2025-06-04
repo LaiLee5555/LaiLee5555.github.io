@@ -2,6 +2,7 @@ const colorLimits = { Blue: 50, Green: 50, Yellow: 50, Red: 50 };
 let isReset = true;
 let is4x8Randomized = false;
 let is4x4Randomized = false;
+let timerInterval;
 
 function getRandomColor() {
     const colors = Object.keys(colorLimits).filter(color => colorLimits[color] > 0);
@@ -25,11 +26,7 @@ function randomize4x8() {
         }
     });
 
-    // Disable the 4x8 button and enable the 4x4 button
-    document.getElementById('random4x8').disabled = true;
-    document.getElementById('random4x4').disabled = false;
     is4x8Randomized = true;
-
     checkIfNextCanBeEnabled();
 }
 
@@ -47,11 +44,62 @@ function randomize4x4() {
         }
     });
 
-    // Disable the 4x4 button
-    document.getElementById('random4x4').disabled = true;
     is4x4Randomized = true;
-
     checkIfNextCanBeEnabled();
+}
+
+function start() {
+    const matchNumber = document.getElementById('matchNumber').value.trim();
+    const team1 = document.getElementById('team1').value.trim();
+    const team2 = document.getElementById('team2').value.trim();
+
+    // Validate inputs
+    if (!matchNumber || !team1 || !team2) {
+        alert('Please fill in all the inputs before starting.');
+        return;
+    }
+
+    // Disable the Start button
+    document.getElementById('start').disabled = true;
+
+    // Randomize 4x8 pattern
+    randomize4x8();
+
+    // Start the timer
+    startTimer(5 * 60); // 5 minutes in seconds
+}
+
+function startTimer(duration) {
+    const timerElement = document.getElementById('timer');
+    let timeRemaining = duration;
+
+    // Disable the Next button at the start of the timer
+    document.getElementById('next').disabled = true;
+
+    timerInterval = setInterval(() => {
+        const minutes = Math.floor(timeRemaining / 60);
+        const seconds = timeRemaining % 60;
+
+        timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+        if (timeRemaining === 120) { // Last 2 minutes
+            randomize4x4();
+        }
+
+        if (timeRemaining <= 0) {
+            clearInterval(timerInterval);
+
+            // Enable the Next button after the timer ends
+            document.getElementById('next').disabled = false;
+        }
+
+        timeRemaining--;
+    }, 1000);
+}
+
+function checkIfNextCanBeEnabled() {
+    // Ensure the Next button is disabled until explicitly enabled by the timer
+    document.getElementById('next').disabled = true;
 }
 
 function resetPatterns() {
@@ -66,10 +114,6 @@ function resetPatterns() {
             colorLimits[color] = 50;
         });
 
-        // Enable the 4x8 button and disable the 4x4 button
-        document.getElementById('random4x4').disabled = true;
-        document.getElementById('random4x8').disabled = false;
-
         // Reset flags
         isReset = true;
         is4x8Randomized = false;
@@ -82,6 +126,13 @@ function resetPatterns() {
         document.getElementById('matchNumber').value = '';
         document.getElementById('team1').value = '';
         document.getElementById('team2').value = '';
+
+        // Reset timer
+        clearInterval(timerInterval);
+        document.getElementById('timer').textContent = '05:00';
+
+        // Enable the Start button
+        document.getElementById('start').disabled = false;
     }
 }
 
@@ -123,9 +174,6 @@ function saveAndReset() {
         link.download = fileName; // Use the constructed filename
         link.href = canvas.toDataURL(); // Convert canvas to a data URL
         link.click(); // Trigger the download
-
-        // Reset the patterns after saving
-        resetPatterns();
     }).catch(error => {
         console.error('Error saving the pattern:', error);
         alert('An error occurred while saving the pattern.');

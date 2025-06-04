@@ -22,74 +22,75 @@
         <label for="team2">Team</label>
         <input type="text" id="team2" placeholder="Enter Team B">
     </div>
-    <div>
-        <h2>4 x 8 Pattern</h2>
-        <div class="grid grid-4x8">
-            <!-- 32 boxes -->
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
+    <div id="timer">05:00</div>
+    <div class="patterns">
+        <div>
+            <h2>4 x 8 Pattern</h2>
+            <div class="grid grid-4x8">
+                <!-- 32 boxes -->
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+            </div>
         </div>
-        <button id="random4x8" onclick="randomize4x8()">Random 4 x 8</button>
-    </div>
-
-    <div>
-        <h2>4 x 4 Pattern</h2>
-        <div class="grid grid-4x4">
-            <!-- 16 boxes -->
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
+        <div>
+            <h2>4 x 4 Pattern</h2>
+            <div class="grid grid-4x4">
+                <!-- 16 boxes -->
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+            </div>
         </div>
-        <button id="random4x4" onclick="randomize4x4()" disabled>Random 4 x 4</button>
     </div>
-
-    
+    <div>
+        <button id="start" onclick="start()">Start</button>
+    </div>
     <div>
         <button id="reset" onclick="resetPatterns()">Reset</button>
-        <button id="next" onclick="saveAndReset()">Next</button>
+        <button id="next" onclick="saveAndReset()">Save</button>
     </div>
 </body>
 </html>
