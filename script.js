@@ -221,7 +221,10 @@ function saveAndReset() {
 }
 
 function checkIfNextCanBeEnabled() {
-    if (is4x8Randomized && is4x4Randomized) {
+    // Enable the Next button only if both patterns are randomized and the timer is over
+    if (is4x8Randomized && is4x4Randomized && timerInterval === null) {
         document.getElementById('next').disabled = false;
+    } else {
+        document.getElementById('next').disabled = true;
     }
 }
