@@ -62,43 +62,46 @@ function start() {
     // Disable the Start button
     document.getElementById('start').disabled = true;
 
-    // Randomize 4x8 pattern
-    randomize4x8();
-
-    // Start the timer
-    startTimer(5 * 60); // 5 minutes in seconds
+    // Show 3-2-1 countdown, then randomize and start timer
+    showCountdown(() => {
+        randomize4x8();
+        startTimer(5 * 60); // 5 minutes in seconds
+    });
 }
 
 function startTimer(duration) {
     const timerElement = document.getElementById('timer');
     let timeRemaining = duration;
+    let twoMinuteSoundPlayed = false;
 
     // Update the timer immediately
     const minutes = Math.floor(timeRemaining / 60);
     const seconds = timeRemaining % 60;
     timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 
-    // Disable the Next button at the start of the timer
     document.getElementById('next').disabled = true;
 
-    // Start the interval
     timerInterval = setInterval(() => {
         timeRemaining--;
 
         const minutes = Math.floor(timeRemaining / 60);
         const seconds = timeRemaining % 60;
-
         timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 
         if (timeRemaining === 120) { // Last 2 minutes
             randomize4x4();
         }
 
+        if (timeRemaining === 125 && !twoMinuteSoundPlayed) {
+            playSound('audio2mnLeft');
+            twoMinuteSoundPlayed = true;
+        }
+
         if (timeRemaining <= 0) {
             clearInterval(timerInterval);
-
-            // Enable the Next button after the timer ends
-            document.getElementById('next').disabled = false;
+            timerInterval = null;
+            playSound('audioTimesUp');
+            checkIfNextCanBeEnabled();
         }
     }, 1000);
 }
@@ -175,6 +178,51 @@ function closeAlert() {
     const alertModal = document.getElementById('customAlert');
     alertModal.style.display = 'none'; // Hide the modal
 }
+
+function playSound(id) {
+    const audio = document.getElementById(id);
+    if (audio) {
+        audio.currentTime = 0;
+        audio.play();
+    }
+}
+
+function showCountdown(callback) {
+    const overlay = document.getElementById('countdownOverlay');
+    const number = document.getElementById('countdownNumber');
+    overlay.classList.add('active');
+    let count = 3;
+    number.textContent = count;
+
+    // Play sound and start countdown only after sound actually starts
+    const audio = document.getElementById('audioMatchBegin');
+    if (audio) {
+        audio.currentTime = 0;
+        // Play returns a promise
+        audio.play().catch(() => { }).finally(() => {
+            startCountdown();
+        });
+    } else {
+        startCountdown();
+    }
+
+    function startCountdown() {
+        const countdownInterval = setInterval(() => {
+            count--;
+            if (count > 0) {
+                number.textContent = count;
+            } else if (count === 0) {
+                number.textContent = "GO!";
+            } else {
+                clearInterval(countdownInterval);
+                overlay.classList.remove('active');
+                if (callback) callback();
+            }
+        }, 1000);
+    }
+}
+
+
 
 function saveAndReset() {
     if (!is4x8Randomized || !is4x4Randomized) {
