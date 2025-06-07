@@ -90,9 +90,10 @@ function startTimer(duration) {
 
         if (timeRemaining === 120) { // Last 2 minutes
             randomize4x4();
+            playSound('audioDing');
         }
 
-        if (timeRemaining === 125 && !twoMinuteSoundPlayed) {
+        if (timeRemaining === 130  && !twoMinuteSoundPlayed) {
             playSound('audio2mnLeft');
             twoMinuteSoundPlayed = true;
         }
