@@ -24,7 +24,7 @@
         <label for="team2">Team</label>
         <input type="text" id="team2" placeholder="Enter Team B">
     </div>
-    <div id="timer">05:00</div>
+    <div id="timer" onclick="openTimerTab()">05:00</div>
     <div class="patterns">
         <div>
             <h2>4 x 8 Pattern</h2>
@@ -112,10 +112,13 @@
     <div id="countdownOverlay">
         <span id="countdownNumber"></span>
     </div>
+    
     <audio id="audioMatchBegin" src="sound/matchBegin.mp3"></audio>
     <audio id="audio2mnLeft" src="sound/2mnLeft.mp3"></audio>
     <audio id="audioTimesUp" src="sound/timesUp.mp3"></audio>
     <audio id="audioDing" src="sound/ding.mp3"></audio>
+
+    
 </body>
 
 </html>

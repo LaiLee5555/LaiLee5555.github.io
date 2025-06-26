@@ -202,3 +202,20 @@ button:disabled {
 #countdownNumber {
     width: 100%;
 }
+#timer {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #5a9bd4; /* Soft blue text */
+    margin-top: 10px;
+    text-align: center;
+    background: #ffffff; /* White background */
+    padding: 10px 20px;
+    border: 2px solid #5a9bd4; /* Soft blue border */
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+    width: fit-content;
+    cursor: pointer; /* Show hand icon on hover */
+}
+
+
+

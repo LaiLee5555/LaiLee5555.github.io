@@ -77,8 +77,8 @@ function startTimer(duration) {
     // Update the timer immediately
     const minutes = Math.floor(timeRemaining / 60);
     const seconds = timeRemaining % 60;
-    timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-
+    // timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    updateTimerDisplay(minutes, seconds);
     document.getElementById('next').disabled = true;
 
     timerInterval = setInterval(() => {
@@ -86,8 +86,8 @@ function startTimer(duration) {
 
         const minutes = Math.floor(timeRemaining / 60);
         const seconds = timeRemaining % 60;
-        timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-
+        // timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        updateTimerDisplay(minutes, seconds);
         if (timeRemaining === 120) { // Last 2 minutes
             randomize4x4();
             playSound('audioDing');
@@ -277,3 +277,72 @@ function checkIfNextCanBeEnabled() {
         document.getElementById('next').disabled = true;
     }
 }
+
+
+function openTimerTab() {
+    const timerValue = document.getElementById('timer').textContent;
+    // Open a new tab with a blank page
+    const timerTab = window.open('', '_blank');
+    // Write HTML for the timer display
+    timerTab.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Big Timer</title>
+            <style>
+                body {
+                    background: #f7f7f7;
+                    color: #4a4a4a;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    height: 100vh;
+                    margin: 0;
+                }
+                #big-timer {
+                    font-size: 20vw;
+                    font-family: 'Roboto Mono', monospace;
+                    letter-spacing: 0.1em;
+                    background: #ffffff;
+                    color: #5a9bd4;
+                    padding: 40px 80px;
+                    border-radius: 10px;
+                    border: 2px solid #5a9bd4;
+                    box-shadow: 0 0 5px rgba(0,0,0,0.05);
+                    font-weight: bold;
+                    text-align: center;
+                }
+            </style>
+        </head>
+        <body>
+            <div id="big-timer">${timerValue}</div>
+            <script>
+                // Listen for timer updates from the opener
+                window.addEventListener('message', function(event) {
+                    if (event.data && event.data.type === 'timerUpdate') {
+                        document.getElementById('big-timer').textContent = event.data.value;
+                    }
+                }, false);
+            </script>
+        </body>
+        </html>
+    `);
+    timerTab.document.close();
+
+    // Send initial timer value
+    setTimeout(() => {
+        timerTab.postMessage({ type: 'timerUpdate', value: timerValue }, '*');
+    }, 200);
+
+    // Store reference for updates
+    window.bigTimerTab = timerTab;
+}
+
+function updateTimerDisplay(minutes, seconds) {
+    const timeStr = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    document.getElementById('timer').textContent = timeStr;
+    if (window.bigTimerTab && !window.bigTimerTab.closed) {
+        window.bigTimerTab.postMessage({ type: 'timerUpdate', value: timeStr }, '*');
+    }
+}
+
